@@ -53,11 +53,25 @@ def default_canvas():
 
 	pygame.draw.rect(screen, BLACK, [0, w_height-w_height/num_rows, w_length, w_height]) # The top panel
 	reset_button.draw()
+	if disks!=[]:
+		for d in disks:
+			cd_x = (d[0]+0.5)*w_height/num_rows
+			cd_y = (d[1]+0.5)* w_length/num_col
+			pygame.draw.circle(screen, BLACK, [cd_x, cd_y],15)
+
+		
+#		
+#def make_matrix_to_check(disks):
+#	
+#	
+#	
+#	
+#def check_winner(m):
+#	
 	
-def disk():
-	def __init__(self, pos, player):
-		self.pos = pos
-		self.player = player
+	
+	
+	
 	
 # Initialize the game engine
 pygame.init()
@@ -83,9 +97,10 @@ clock = pygame.time.Clock()
 font_big = pygame.font.SysFont('Calibri', 20, True, False)
 reset_button = button(w_length/2, w_height- 0.5*w_height/num_rows, 20, 60, "Reset")
 
+disks = []
+
 while not done:
 	# This limits the while loop to a max of 10 times per second.
-    # Leave this out and we will use all CPU we can.
 	clock.tick(10)
 	for event in pygame.event.get(): # User did something
 		if event.type == pygame.QUIT: # If user clicked close
@@ -98,17 +113,32 @@ while not done:
 			# check if the reset button is clicked
 			mouse_pos = pygame.mouse.get_pos()
 			flag = reset_button.is_clicked(pygame.mouse.get_pos() )
-#			if flag ==0:
-#				if 
-#				
-#			else:
-				# reset the game
-			
+			if flag ==0:
+				print "use have not clicked on the reset button clicked at",mouse_pos 
+				if mouse_pos[1]>w_height-0.5*w_height/num_rows:
+					# clicked on the empy space
+					print "clicked on empty space"
+					pass
+				else:
+					# Clicked on the road, get the indexes of the square and make the impression
+					i = mouse_pos[0]*num_col/w_length
+					j = mouse_pos[1]*num_rows/w_height+1
+					if [i, j] in disks:
+						print i , j
+						pass
+					else:
+						print i , j
+						disks.append([i, j])
+					
+#				 reset the game
+			print disks
 			# check if any of the box is clicked
 			
 			
 			print("User pressed a mouse button")
 			print 
+#	m = make_matrix_to_check(disks)
+#	winner = check_winner(m)
 	default_canvas()
 	pygame.display.flip()
 	#print discrete_pts
